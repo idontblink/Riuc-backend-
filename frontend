@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PastPapers RIU - Rosebank International University</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0D1B3E;
+      --gold: #C9A84C;
+      --gold2: #E8C97A;
+      --bg: #FFFFFF;
+      --bg2: #F5F5F7;
+      --bg3: #EBEBF0;
+      --t1: #1D1D1F;
+      --t2: #86868B;
+      --t3: #A1A1A6;
+      --bdr: #C9C9CE;
+      --bdr2: #D5D5DA;
+      --r: 8px;
+      --rl: 12px;
+    }
+
+    html.dark {
+      --bg: #1A1A1E;
+      --bg2: #2D2D33;
+      --bg3: #3A3A41;
+      --t1: #F5F5F7;
+      --t2: #A1A1A6;
+      --t3: #86868B;
+      --bdr: #5A5A62;
+      --bdr2: #4A4A52;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--t1);
+      background: #F9F9FB;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    html.dark body { background: #0F0F13; }
+
+    .app { max-width: 720px; margin: 0 auto; padding: 0 1rem 2rem; }
+
+    /* ── Header ── */
+    .header {
+      background: var(--navy);
+      border-radius: var(--rl);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(13,27,62,0.15);
+    }
+
+    html.dark .header { background: linear-gradient(135deg,#1a2f4a,#0d1b3e); }
+
+    .header-left { display: flex; align-items: center; gap: 12px; }
+
+    .logo-circle {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 700; color: #fff;
+      transition: transform 0.3s;
+    }
+
+    .logo-circle:hover { transform: scale(1.1) rotate(5deg); }
+
+    .brand { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .brand span { display: block; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; text-transform: uppercase; }
+
+    .header-nav { display: flex; gap: 8px; align-items: center; }
+
+    .nav-btn {
+      background: rgba(255,255,255,0.1);
+      border: 0.5px solid rgba(255,255,255,0.2);
+      border-radius: var(--r);
+      padding: 6px 12px;
+      font-size: 12px; color: rgba(255,255,255,0.8);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-btn:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+
+    .nav-btn.active {
+      background: var(--gold); color: var(--navy);
+      border-color: var(--gold); font-weight: 500;
+      box-shadow: 0 4px 12px rgba(201,168,76,0.3);
+    }
+
+    .theme-toggle {
+      background: rgba(255,255,255,0.1);
+      border: 0.5px solid rgba(255,255,255,0.2);
+      border-radius: var(--r);
+      padding: 6px 12px; color: rgba(255,255,255,0.8);
+      cursor: pointer; font-size: 16px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .theme-toggle:hover { background: rgba(255,255,255,0.18); transform: rotate(20deg); }
+
+    /* ── Stats ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 10px; margin-bottom: 1.25rem;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .stat-card {
+      background: var(--bg2); border-radius: var(--r);
+      padding: 0.75rem 1rem; text-align: center;
+      border: 0.5px solid var(--bdr);
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .stat-card:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: 0 8px 16px rgba(201,168,76,0.15); }
+
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--t1); }
+    .stat-label { font-size: 11px; color: var(--t2); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* ── Search bar ── */
+    .search-bar { display: flex; gap: 8px; margin-bottom: 1rem; animation: fadeUp 0.6s ease 0.2s both; }
+
+    .search-bar input {
+      flex: 1; padding: 10px 14px;
+      border: 0.5px solid var(--bdr2); border-radius: var(--r);
+      font-size: 14px; background: var(--bg); color: var(--t1);
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-bar input::placeholder { color: var(--t3); }
+    .search-bar input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+
+    .upload-btn {
+      background: var(--navy); color: #fff;
+      border: none; border-radius: var(--r);
+      padding: 10px 16px; font-size: 13px; font-weight: 500;
+      cursor: pointer; white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(13,27,62,0.2);
+    }
+
+    .upload-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(13,27,62,0.3); }
+
+    /* ── Filters ── */
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; animation: fadeUp 0.6s ease 0.3s both; }
+
+    .filter-select {
+      padding: 7px 11px;
+      border: 0.5px solid var(--bdr2); border-radius: var(--r);
+      font-size: 13px; background: var(--bg); color: var(--t1);
+      font-family: 'DM Sans', sans-serif; cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .filter-select:focus, .filter-select:hover { outline: none; border-color: var(--gold); }
+
+    .filter-tag {
+      padding: 6px 12px;
+      border: 0.5px solid var(--bdr2); border-radius: 20px;
+      font-size: 12px; cursor: pointer;
+      background: var(--bg); color: var(--t2);
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .filter-tag:hover { border-color: var(--gold); color: var(--t1); }
+    .filter-tag.on { background: var(--gold2); color: var(--navy); border-color: var(--gold); font-weight: 500; box-shadow: 0 4px 12px rgba(201,168,76,0.25); }
+
+    /* ── Results header ── */
+    .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; animation: fadeUp 0.6s ease 0.4s both; }
+
+    .results-count { font-size: 13px; color: var(--t2); }
+
+    .sort-select {
+      padding: 6px 10px;
+      border: 0.5px solid var(--bdr); border-radius: var(--r);
+      font-size: 12px; background: var(--bg); color: var(--t2);
+      font-family: 'DM Sans', sans-serif; cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .sort-select:hover, .sort-select:focus { outline: none; border-color: var(--gold); }
+
+    /* ── Paper cards ── */
+    .papers-list { display: flex; flex-direction: column; gap: 10px; animation: fadeIn 0.4s ease 0.5s both; }
+
+    .paper-card {
+      background: var(--bg); border: 0.5px solid var(--bdr); border-radius: var(--rl);
+      padding: 1rem 1.25rem; display: flex; gap: 14px;
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .paper-card:hover { border-color: var(--bdr2); box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-4px); }
+    .paper-card.bookmarked { border-left: 3px solid var(--gold); }
+
+    .paper-icon {
+      width: 40px; height: 48px;
+      background: var(--bg2); border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; border: 0.5px solid var(--bdr);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .paper-card:hover .paper-icon { background: var(--gold2); transform: rotate(-5deg) scale(1.1); }
+    .paper-icon svg { width: 20px; height: 20px; fill: var(--t2); transition: fill 0.2s; }
+    .paper-card:hover .paper-icon svg { fill: var(--navy); }
+
+    .paper-body { flex: 1; min-width: 0; }
+    .paper-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .paper-course { font-size: 11px; font-weight: 500; color: var(--gold); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 3px; }
+    .paper-title { font-size: 14px; font-weight: 500; color: var(--t1); line-height: 1.4; margin-bottom: 6px; }
+    .paper-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+
+    /* ── Badges ── */
+    .badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+    .badge-year   { background: var(--bg2); color: var(--t2); border: 0.5px solid var(--bdr); }
+    .badge-dept   { background: var(--bg2); color: var(--t3); border: 0.5px solid var(--bdr); }
+    .badge-finals { background: #E6F1FB; color: #185FA5; }
+    .badge-midsem { background: #EAF3DE; color: #3B6D11; }
+    .badge-quiz   { background: #FAEEDA; color: #854F0B; }
+    .badge-important { background: #FAECE7; color: #993C1D; }
+    .badge-repeated  { background: #EAF3DE; color: #3B6D11; }
+    .badge-hard      { background: #FBEAF0; color: #993556; }
+    .badge-answers   { background: #EEEDFE; color: #534AB7; }
+
+    /* ── Paper actions ── */
+    .paper-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+
+    .bookmark-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 4px; color: var(--t3); font-size: 18px; line-height: 1;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .bookmark-btn:hover { color: var(--gold); transform: scale(1.3) rotate(-15deg); }
+    .bookmark-btn.saved { color: var(--gold); }
+
+    .upvotes { font-size: 11px; color: var(--t3); display: flex; align-items: center; gap: 3px; transition: color 0.2s; }
+    .paper-card:hover .upvotes { color: var(--t1); }
+
+    .view-btn {
+      font-size: 11px; color: var(--t2);
+      background: var(--bg2); border: 0.5px solid var(--bdr); border-radius: var(--r);
+      padding: 4px 10px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .view-btn:hover { background: var(--bg3); color: var(--t1); border-color: var(--gold); }
+
+    .empty { text-align: center; padding: 2rem; color: var(--t3); font-size: 14px; }
+
+    /* ── Modal ── */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 100;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-bg.open { display: flex; animation: fadeIn 0.3s ease; }
+
+    .modal {
+      background: var(--bg); border-radius: var(--rl);
+      padding: 1.5rem; width: 90%; max-width: 480px;
+      border: 0.5px solid var(--bdr2);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+      animation: slideUp 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .modal h2 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 1rem; color: var(--t1); }
+
+    .form-group { margin-bottom: 1rem; }
+
+    .form-group label {
+      display: block; font-size: 12px; font-weight: 500;
+      color: var(--t2); margin-bottom: 5px;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 9px 12px;
+      border: 0.5px solid var(--bdr2); border-radius: var(--r);
+      font-size: 13px; background: var(--bg); color: var(--t1);
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--t3); }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .upload-area {
+      border: 1.5px dashed var(--bdr2); border-radius: var(--r);
+      padding: 1.5rem; text-align: center;
+      font-size: 13px; color: var(--t3);
+      cursor: pointer; background: var(--bg2);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .upload-area:hover,
+    .upload-area.dragover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+
+    .file-input { display: none; }
+
+    .tags-input { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .tag-toggle {
+      padding: 5px 11px;
+      border: 0.5px solid var(--bdr2); border-radius: 20px;
+      font-size: 12px; cursor: pointer;
+      background: var(--bg); color: var(--t2);
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .tag-toggle:hover { border-color: var(--gold); color: var(--t1); }
+    .tag-toggle.on { background: var(--gold2); color: var(--navy); border-color: var(--gold); font-weight: 500; box-shadow: 0 4px 12px rgba(201,168,76,0.3); }
+
+    .modal-btns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem; }
+
+    .btn-cancel {
+      background: var(--bg2); border: 0.5px solid var(--bdr); border-radius: var(--r);
+      padding: 9px 16px; font-size: 13px; cursor: pointer;
+      color: var(--t2); font-family: 'DM Sans', sans-serif;
+      transition: color 0.2s, opacity 0.2s;
+    }
+
+    .btn-cancel:hover { opacity: 0.8; color: var(--t1); }
+
+    .btn-submit {
+      background: var(--navy); color: #fff; border: none; border-radius: var(--r);
+      padding: 9px 18px; font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(13,27,62,0.2);
+    }
+
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(13,27,62,0.3); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ── Views ── */
+    .view { display: none; }
+    .view.active { display: block; animation: fadeIn 0.4s ease; }
+    .bookmarks-view.active,
+    .profile-view.active { display: flex; flex-direction: column; gap: 10px; }
+
+    /* ── Profile ── */
+    .profile-card {
+      background: var(--bg); border: 0.5px solid var(--bdr); border-radius: var(--rl);
+      padding: 1.5rem; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .profile-card:hover { border-color: var(--gold); box-shadow: 0 8px 24px rgba(201,168,76,0.15); }
+
+    .profile-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--navy); display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #fff;
+      margin-bottom: 1rem; transition: background 0.2s, transform 0.2s;
+    }
+
+    .profile-avatar:hover { transform: scale(1.1) rotate(10deg); background: var(--gold); }
+
+    .profile-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; margin-bottom: 3px; color: var(--t1); }
+    .profile-meta { font-size: 13px; color: var(--t2); margin-bottom: 1rem; }
+
+    .profile-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding-top: 1rem; border-top: 0.5px solid var(--bdr); }
+
+    .p-stat { text-align: center; padding: 0.75rem; border-radius: var(--r); transition: background 0.2s, transform 0.2s; }
+    .p-stat:hover { background: var(--bg2); transform: translateY(-2px); }
+    .p-stat-n { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--t1); }
+    .p-stat-l { font-size: 11px; color: var(--t3); text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* ── Alert ── */
+    .alert { padding: 10px 12px; border-radius: var(--r); margin-bottom: 1rem; font-size: 13px; animation: slideDown 0.3s ease; }
+    .alert-success { background: #EAF3DE; color: #3B6D11; border: 0.5px solid #3B6D11; }
+    .alert-error   { background: #FAECE7; color: #993C1D; border: 0.5px solid #993C1D; }
+
+    /* ── Animations ── */
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp  { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-circle">R</div>
+      <div class="brand">PastPapers RIU<span>Rosebank International University</span></div>
+    </div>
+    <div class="header-nav">
+      <button class="nav-btn active" onclick="showView('search')">Search</button>
+      <button class="nav-btn" onclick="showView('bookmarks')">Bookmarks</button>
+      <button class="nav-btn" onclick="showView('profile')">Profile</button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme"><span id="theme-icon">🌙</span></button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="s-papers">247</div><div class="stat-label">Papers</div></div>
+    <div class="stat-card"><div class="stat-num">38</div><div class="stat-label">Courses</div></div>
+    <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Faculties</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-bookmarks">0</div><div class="stat-label">Saved</div></div>
+  </div>
+
+  <!-- Search View -->
+  <div class="view search-view active" id="view-search">
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search by course code, name, or keyword..." oninput="renderPapers()">
+      <button class="upload-btn" onclick="openUpload()">+ Upload</button>
+    </div>
+    <div class="filters">
+      <select class="filter-select" id="filter-dept" onchange="renderPapers()">
+        <option value="">All Departments</option>
+        <option>Business Administration</option>
+        <option>Computer Science</option>
+        <option>Accounting &amp; Finance</option>
+        <option>Public Admin</option>
+        <option>Engineering</option>
+      </select>
+      <select class="filter-select" id="filter-year" onchange="renderPapers()">
+        <option value="">All Years</option>
+        <option>2024</option><option>2023</option><option>2022</option><option>2021</option>
+      </select>
+      <select class="filter-select" id="filter-type" onchange="renderPapers()">
+        <option value="">All Types</option>
+        <option>Finals</option><option>Midsem</option><option>Quiz</option>
+      </select>
+      <button class="filter-tag" id="tag-repeated" onclick="toggleTag('repeated')">Repeated</button>
+      <button class="filter-tag" id="tag-important" onclick="toggleTag('important')">Important</button>
+    </div>
+    <div class="results-header">
+      <span class="results-count" id="results-count">Showing all papers</span>
+      <select class="sort-select" id="sort-select" onchange="renderPapers()">
+        <option value="recent">Most recent</option>
+        <option value="upvotes">Most upvoted</option>
+      </select>
+    </div>
+    <div class="papers-list" id="papers-list"></div>
+  </div>
+
+  <!-- Bookmarks View -->
+  <div class="view bookmarks-view" id="view-bookmarks">
+    <div class="papers-list" id="bookmarks-list"></div>
+  </div>
+
+  <!-- Profile View -->
+  <div class="view profile-view" id="view-profile">
+    <div class="profile-card">
+      <div class="profile-avatar">C</div>
+      <div class="profile-name">Chris Mensah</div>
+      <div class="profile-meta">Level 100 · Computer Science · RIU</div>
+      <div class="profile-stats">
+        <div class="p-stat"><div class="p-stat-n" id="p-uploads">3</div><div class="p-stat-l">Uploaded</div></div>
+        <div class="p-stat"><div class="p-stat-n" id="p-saved">0</div><div class="p-stat-l">Saved</div></div>
+        <div class="p-stat"><div class="p-stat-n">12</div><div class="p-stat-l">Upvotes</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal-bg" id="upload-modal">
+  <div class="modal">
+    <h2>Upload past question</h2>
+    <div id="alert-container"></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Course code</label>
+        <input type="text" id="u-code" placeholder="e.g. CSC101">
+      </div>
+      <div class="form-group">
+        <label>Year</label>
+        <select id="u-year">
+          <option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Course name</label>
+      <input type="text" id="u-name" placeholder="e.g. Introduction to Programming">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Department</label>
+        <select id="u-dept">
+          <option>Computer Science</option>
+          <option>Business Administration</option>
+          <option>Accounting &amp; Finance</option>
+          <option>Public Admin</option>
+          <option>Engineering</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Exam type</label>
+        <select id="u-type">
+          <option>Finals</option><option>Midsem</option><option>Quiz</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Question file</label>
+      <div class="upload-area" id="upload-area"
+        ondrop="handleDrop(event)"
+        ondragover="handleDragOver(event)"
+        ondragleave="handleDragLeave(event)"
+        onclick="document.getElementById('file-input').click()">
+        Click to attach PDF or image
+      </div>
+      <input type="file" id="file-input" class="file-input" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(event)">
+    </div>
+    <div class="form-group">
+      <label>Tags</label>
+      <div class="tags-input">
+        <button type="button" class="tag-toggle" onclick="this.classList.toggle('on')">Important</button>
+        <button type="button" class="tag-toggle" onclick="this.classList.toggle('on')">Repeated</button>
+        <button type="button" class="tag-toggle" onclick="this.classList.toggle('on')">Hard</button>
+        <button type="button" class="tag-toggle" onclick="this.classList.toggle('on')">Has answers</button>
+      </div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeUpload()">Cancel</button>
+      <button class="btn-submit" id="submit-btn" onclick="submitUpload()">Submit for review</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Data ──
+  const PAPERS = [
+    {id:1,  code:"CSC101", name:"Introduction to Programming",    dept:"Computer Science",      year:2024, type:"Finals", tags:["important","repeated"], upvotes:34, answers:true,  uploader:"Ama K."},
+    {id:2,  code:"CSC101", name:"Introduction to Programming",    dept:"Computer Science",      year:2023, type:"Midsem", tags:["repeated"],             upvotes:28, answers:false, uploader:"Kwame A."},
+    {id:3,  code:"ACC201", name:"Financial Accounting",           dept:"Accounting & Finance",  year:2024, type:"Finals", tags:["important","hard"],     upvotes:41, answers:true,  uploader:"Abena O."},
+    {id:4,  code:"BUS110", name:"Principles of Management",       dept:"Business Administration",year:2023,type:"Finals", tags:["repeated"],             upvotes:22, answers:false, uploader:"Yaw M."},
+    {id:5,  code:"PUB102", name:"Introduction to Public Admin",   dept:"Public Admin",          year:2024, type:"Midsem", tags:["important"],            upvotes:19, answers:false, uploader:"Esi A."},
+    {id:6,  code:"ENG201", name:"Engineering Mathematics II",     dept:"Engineering",           year:2022, type:"Finals", tags:["hard"],                 upvotes:15, answers:true,  uploader:"Kofi B."},
+    {id:7,  code:"CSC203", name:"Data Structures & Algorithms",   dept:"Computer Science",      year:2024, type:"Midsem", tags:["hard","important"],     upvotes:37, answers:false, uploader:"Mansa T."},
+    {id:8,  code:"BUS220", name:"Business Statistics",            dept:"Business Administration",year:2023,type:"Quiz",   tags:["repeated"],             upvotes:11, answers:true,  uploader:"Afua D."},
+    {id:9,  code:"ACC101", name:"Principles of Accounting",       dept:"Accounting & Finance",  year:2022, type:"Finals", tags:["important","repeated"], upvotes:52, answers:true,  uploader:"Nana A."},
+    {id:10, code:"CSC102", name:"Computer Systems",               dept:"Computer Science",      year:2023, type:"Finals", tags:["hard"],                 upvotes:24, answers:false, uploader:"Kwesi P."},
+    {id:11, code:"PUB201", name:"Public Policy Analysis",         dept:"Public Admin",          year:2022, type:"Midsem", tags:["important"],            upvotes:9,  answers:false, uploader:"Adwoa F."},
+    {id:12, code:"ENG101", name:"Introduction to Engineering",    dept:"Engineering",           year:2024, type:"Quiz",   tags:["repeated"],             upvotes:7,  answers:false, uploader:"Kofi A."},
+  ];
+
+  // ── State ──
+  let bookmarks  = new Set();
+  let activeTags = new Set();
+  let uploadedFile = null;
+
+  // ── Theme ──
+  function loadTheme() {
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = saved ? saved === 'dark' : prefersDark;
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      document.getElementById('theme-icon').textContent = '☀️';
+    }
+  }
+
+  function toggleTheme() {
+    const isDark = document.documentElement.classList.toggle('dark');
+    document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  }
+
+  // ── Bookmarks ──
+  function loadBookmarks() {
+    try {
+      const saved = localStorage.getItem('bookmarks');
+      if (saved) bookmarks = new Set(JSON.parse(saved));
+    } catch (e) { console.error('Error loading bookmarks:', e); }
+  }
+
+  function saveBookmarks() {
+    localStorage.setItem('bookmarks', JSON.stringify([...bookmarks]));
+  }
+
+  // ── Badge helpers ──
+  const TYPE_CLASS = { Finals: 'badge-finals', Midsem: 'badge-midsem', Quiz: 'badge-quiz' };
+
+  function tagBadges(tags, answers) {
+    return [
+      tags.includes('important') ? '<span class="badge badge-important">Important</span>' : '',
+      tags.includes('repeated')  ? '<span class="badge badge-repeated">Repeated</span>'   : '',
+      tags.includes('hard')      ? '<span class="badge badge-hard">Hard</span>'            : '',
+      answers                    ? '<span class="badge badge-answers">Has answers</span>'  : '',
+    ].join('');
+  }
+
+  function paperHTML(p) {
+    const bk = bookmarks.has(p.id);
+    return `
+      <div class="paper-card${bk ? ' bookmarked' : ''}" id="card-${p.id}">
+        <div class="paper-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+        </div>
+        <div class="paper-body">
+          <div class="paper-course">${p.code}</div>
+          <div class="paper-title">${p.name}</div>
+          <div class="paper-meta">
+            <span class="badge badge-year">${p.year}</span>
+            <span class="badge ${TYPE_CLASS[p.type]}">${p.type}</span>
+            <span class="badge badge-dept">${p.dept}</span>
+            ${tagBadges(p.tags, p.answers)}
+          </div>
+        </div>
+        <div class="paper-actions">
+          <button class="bookmark-btn${bk ? ' saved' : ''}" onclick="toggleBookmark(${p.id},event)">${bk ? '★' : '☆'}</button>
+          <div class="upvotes">▲ ${p.upvotes}</div>
+          <button class="view-btn" onclick="viewPaper(${p.id})">View</button>
+        </div>
+      </div>`;
+  }
+
+  // ── Render ──
+  function renderPapers() {
+    const q    = document.getElementById('search-input').value.toLowerCase();
+    const dept = document.getElementById('filter-dept').value;
+    const year = document.getElementById('filter-year').value;
+    const type = document.getElementById('filter-type').value;
+    const sort = document.getElementById('sort-select').value;
+
+    let filtered = PAPERS.filter(p => {
+      if (q && !p.code.toLowerCase().includes(q) && !p.name.toLowerCase().includes(q) && !p.dept.toLowerCase().includes(q)) return false;
+      if (dept && p.dept !== dept) return false;
+      if (year && p.year !== parseInt(year)) return false;
+      if (type && p.type !== type) return false;
+      for (const tag of activeTags) if (!p.tags.includes(tag)) return false;
+      return true;
+    });
+
+    filtered.sort(sort === 'upvotes'
+      ? (a, b) => b.upvotes - a.upvotes
+      : (a, b) => b.year - a.year || b.id - a.id
+    );
+
+    document.getElementById('results-count').textContent = `Showing ${filtered.length} paper${filtered.length !== 1 ? 's' : ''}`;
+    document.getElementById('papers-list').innerHTML = filtered.length
+      ? filtered.map(paperHTML).join('')
+      : '<div class="empty">No papers found. Be the first to upload!</div>';
+  }
+
+  function renderBookmarks() {
+    const bkPapers = PAPERS.filter(p => bookmarks.has(p.id));
+    document.getElementById('bookmarks-list').innerHTML = bkPapers.length
+      ? bkPapers.map(paperHTML).join('')
+      : '<div class="empty">No saved papers yet. Bookmark papers to find them here.</div>';
+    document.getElementById('s-bookmarks').textContent = bookmarks.size;
+    document.getElementById('p-saved').textContent = bookmarks.size;
+  }
+
+  // ── Actions ──
+  function toggleBookmark(id, e) {
+    e.stopPropagation();
+    bookmarks.has(id) ? bookmarks.delete(id) : bookmarks.add(id);
+    saveBookmarks();
+    renderPapers();
+    renderBookmarks();
+  }
+
+  function toggleTag(tag) {
+    activeTags.has(tag) ? activeTags.delete(tag) : activeTags.add(tag);
+    document.getElementById('tag-' + tag).classList.toggle('on');
+    renderPapers();
+  }
+
+  function showView(v) {
+    document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', ['search','bookmarks','profile'][i] === v);
+    });
+    document.getElementById('view-' + v).classList.add('active');
+    if (v === 'bookmarks') renderBookmarks();
+  }
+
+  function viewPaper(id) {
+    const p = PAPERS.find(x => x.id === id);
+    if (p) alert(`${p.code} — ${p.name}\nYear: ${p.year} | Type: ${p.type}\nUploader: ${p.uploader}\n\nConnect backend to view full content.`);
+  }
+
+  // ── Upload modal ──
+  function openUpload()  { document.getElementById('upload-modal').classList.add('open'); clearUploadForm(); }
+  function closeUpload() { document.getElementById('upload-modal').classList.remove('open'); clearUploadForm(); }
+
+  function clearUploadForm() {
+    ['u-code','u-name'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('u-year').value = '2024';
+    document.getElementById('u-dept').value = 'Computer Science';
+    document.getElementById('u-type').value = 'Finals';
+    document.getElementById('file-input').value = '';
+    uploadedFile = null;
+    document.getElementById('alert-container').innerHTML = '';
+    document.querySelectorAll('.tag-toggle').forEach(btn => btn.classList.remove('on'));
+    const area = document.getElementById('upload-area');
+    area.textContent = 'Click to attach PDF or image';
+    area.style.borderColor = '';
+  }
+
+  function handleDragOver(e)  { e.preventDefault(); document.getElementById('upload-area').classList.add('dragover'); }
+  function handleDragLeave(e) { e.preventDefault(); document.getElementById('upload-area').classList.remove('dragover'); }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('upload-area').classList.remove('dragover');
+    if (e.dataTransfer.files.length) processFile(e.dataTransfer.files[0]);
+  }
+
+  function handleFileSelect(e) {
+    if (e.target.files.length) processFile(e.target.files[0]);
+  }
+
+  function processFile(file) {
+    const validTypes = ['application/pdf','image/jpeg','image/png','image/jpg'];
+    if (!validTypes.includes(file.type)) { showAlert('Only PDF and image files are allowed.', 'error'); return; }
+    if (file.size > 5 * 1024 * 1024)    { showAlert('File size must be less than 5MB.', 'error'); return; }
+    uploadedFile = file;
+    const area = document.getElementById('upload-area');
+    area.textContent = `✓ ${file.name}`;
+    area.style.borderColor = 'var(--gold)';
+  }
+
+  function getSelectedTags() {
+    return [...document.querySelectorAll('.tag-toggle.on')].map(b => b.textContent.toLowerCase());
+  }
+
+  function showAlert(msg, type) {
+    document.getElementById('alert-container').innerHTML =
+      `<div class="alert alert-${type}">${msg}</div>`;
+  }
+
+  function submitUpload() {
+    const code = document.getElementById('u-code').value.trim();
+    const name = document.getElementById('u-name').value.trim();
+    if (!code || !name)  { showAlert('Please fill in the course code and name.', 'error'); return; }
+    if (!uploadedFile)   { showAlert('Please upload a file.', 'error'); return; }
+
+    const newPaper = {
+      id: PAPERS.length + 1,
+      code: code.toUpperCase(),
+      name,
+      dept: document.getElementById('u-dept').value,
+      year: parseInt(document.getElementById('u-year').value),
+      type: document.getElementById('u-type').value,
+      tags: getSelectedTags(),
+      upvotes: 0, answers: false, uploader: 'You'
+    };
+
+    PAPERS.unshift(newPaper);
+    document.getElementById('s-papers').textContent = PAPERS.length;
+    document.getElementById('p-uploads').textContent =
+      parseInt(document.getElementById('p-uploads').textContent) + 1;
+
+    showAlert('Submitted for review!', 'success');
+    setTimeout(() => { closeUpload(); renderPapers(); }, 1500);
+  }
+
+  // ── Init ──
+  loadTheme();
+  loadBookmarks();
+  renderPapers();
+</script>
+</body>
+</html>
