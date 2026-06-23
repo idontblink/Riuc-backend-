@@ -26,6 +26,7 @@ app.use("/api/auth",      require("./routes/auth"));
 app.use("/api/papers",    require("./routes/papers"));
 app.use("/api/bookmarks", require("./routes/bookmarks"));
 app.use("/api/upvotes",   require("./routes/upvotes"));
+app.use("/api/users",    require("./routes/users"));
 app.use("/api/upload",    require("./routes/upload"));
 
 app.get("/", (req, res) => {
